@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hasaki_w_c.secondkillseckill.dao.KillOrderDao">
+    <insert id="insert" parameterType="com.hasaki_w_c.secondkillseckill.entity.KillOrder">
+        insert into t_kill_order(konum, kostatus, userid, name, address, mobile, postage, pay, createTime)
+        VALUE (#{konum},#{kostatus},#{userid},#{name},#{address},#{mobile},#{postage},#{pay},#{createTime})
+        <selectKey resultType="Integer" keyProperty="koid">
+            /*下面语句的作用是将新生成的 id 号赋值给 koid */
+            select last_insert_id() as ID
+        </selectKey>
+    </insert>
+    
+    <select id="findBykonum" parameterType="String" resultType="com.hasaki_w_c.secondkillseckill.entity.KillOrder">
+        select * from t_kill_order where konum = #{value}
+    </select>
+</mapper>

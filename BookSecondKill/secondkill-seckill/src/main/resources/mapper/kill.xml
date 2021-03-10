@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hasaki_w_c.secondkillseckill.dao.KillDAO">
+    <select id="findById" parameterType="Integer" resultType="com.hasaki_w_c.secondkillseckill.entity.Kill">
+        select * from t_kill where kid = #{value}
+    </select>
+
+    <select id="findUnstartKill" resultType="com.hasaki_w_c.secondkillseckill.entity.Kill">
+        select * from t_kill where now() between startTime and endTime and status = 0
+    </select>
+
+    <select id="findFinishKill" resultType="com.hasaki_w_c.secondkillseckill.entity.Kill">
+        select * from t_kill where now() > endTime and status = 1
+    </select>
+    
+    <update id="update" parameterType="com.hasaki_w_c.secondkillseckill.entity.Kill">
+        update  t_kill set bookId = #{bookId}, count = #{count}, startTime = #{startTime},
+                           endTime = #{endTime}, status = #{status}, currentPrice = #{currentPrice}
+                           where kid = #{kid}
+    </update>
+</mapper>

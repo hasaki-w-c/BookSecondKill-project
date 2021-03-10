@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ch_ZN">
+<head>
+    <meta charset="UTF-8">
+    <title>秒杀页面</title>
+    <link type="text/css" rel="stylesheet" href="/static/css/style.css" >
+    <script type="text/javascript" src="/static/jquery-1.7.2.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/limonte-sweetalert2/10.12.5/sweetalert2.all.js"></script>
+    <script type="text/javascript">
+        /*$(function () {
+            var bid = $(this).attr("bid")
+            $.getJSON("/evaluate/${book.id?string('0')}",bid, function (json) {
+                console.info(json);
+                for (var i = 0; i < json.length; i++) {
+                    var eva = json[i];
+                    $("#divEvaluate").append("<h6 style='text-align: left'> " + eva.createTime + " 匿名用户：" + eva.content + " <h6>")
+                }
+            })
+        })*/
+
+        $(function () {
+            $("#btnSecKill").click(function () {
+                var konum = $(this).attr("konum")
+                $.getJSON("/seckill?kid=2&userid=994", konum, function (json) {
+                    if (json.code === "1") {
+                        alert("恭喜你,得到抢购的资格，快去下单吧!")
+                        var konum = json.data.konum;
+                        console.info(konum)
+                        Swal.fire({
+                            title : "正在创建订单，请稍后..." ,
+                            timer : 3000 ,
+                            showConfirmButton : false ,
+                            type : "info"
+                        }).then(function () {
+                            window.location.href = "/checkKillOrder?konum=" + konum;
+                        })
+                    }else {
+                        alert(json.message);
+                    }
+                });
+            })
+        })
+    </script>
+</head>
+<body>
+
+<div id="header" style="text-align: center">
+    <img class="logo_img" alt="" src="/static/img/logo.gif" >
+    <span class="wel_word">商品秒杀</span>
+</div>
+<div id="main" style="text-align: center">
+    <div id="book" style="text-align: center">
+
+        <div class="b_list" style="text-align: center">
+            <div class="img_div">
+                <img class="book_img" alt="" src="/static/img/default.jpg" />
+            </div>
+            <div class="book_info">
+                <div class="book_name">
+                    <span class="sp1">书名:</span>
+                    <span class="sp2">${book.name}</span>
+                </div>
+                <div class="book_author">
+                    <span class="sp1">作者:</span>
+                    <span class="sp2">${book.author}</span>
+                </div>
+                <div class="book_price">
+                    <span class="sp1">价格:</span>
+                    <span class="sp2">${book.price?string('￥0.00')}</span>
+                </div>
+                <div class="book_sales">
+                    <span class="sp1">销量:</span>
+                    <span class="sp2">${book.sales}</span>
+                </div>
+                <div class="book_amount">
+                    <span class="sp1">库存:</span>
+                    <span class="sp2">${book.stock}</span>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <h2>活动倒计时<span id="kill" style="color: red">0天4时39分59秒</span> </h2>
+            <li style="">
+                <span>抢购价：</span><span style="color: red">￥9.9</span><span><s>￥66.66</s></span>
+                <br>
+                <span>库存只剩<span style="color: crimson">8</span>件了，每人限购一件</span>
+            </li>
+            <button style="background-color: red" id="btnSecKill">立即抢购</button>
+        </div>
+
+
+
+        <div id="divEvaluate" style="text-align: center">
+            <h1>评论区</h1>
+        </div>
+    </div>
+
+
+</div>
+
+<div id="bottom">
+		<span>
+			hasaki书城.Copyright &copy;2020
+		</span>
+</div>
+</body>
+</html>
